@@ -12,12 +12,15 @@ public:
         seg.resize(n*4);
     }
 
-    int build(int ind, int low, int high, vector<int> &arr){
-        if(low == high) return seg[ind] = arr[low];
-        int mid = (high+low)/2;
+    void build(int ind, int low, int high, vector<int> &arr){
+        if(low == high){
+            seg[ind] = arr[low];
+            return;
+        }
+        int mid = (low+high)/2;
         build(ind*2+1, low, mid, arr);
         build(ind*2+2, mid+1, high, arr);
-        return seg[ind] = seg[ind*2+1] + seg[ind*2+2];
+        seg[ind] = min(seg[ind*2+1], seg[ind*2+2]);
     }
 
     int query(int ind, int l, int h, int low, int high){
